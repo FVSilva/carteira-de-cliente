@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell, LabelList } from "recharts";
 
 const FUNCOES = ["gp", "gt", "designer", "copywriter"];
 const FUNCAO_LABEL = { gp: "GP", gt: "GT", designer: "Designer", copywriter: "Copywriter" };
@@ -53,12 +53,13 @@ export default function Modulo4Carga({ data }) {
           )}
 
           <ResponsiveContainer width="100%" height={220}>
-            <BarChart data={barData} margin={{ left: -10, right: 10 }}>
-              <XAxis dataKey="name" tick={{ fontSize: 11, fill: "#374151" }} />
-              <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: "#6b7280" }} />
-              <Tooltip />
+            <BarChart data={barData} margin={{ left: -10, right: 10, top: 20 }}>
+              <XAxis dataKey="name" tick={{ fontSize: 11, fill: "#a1a1aa" }} axisLine={false} tickLine={false} />
+              <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: "#52525b" }} axisLine={false} tickLine={false} />
+              <Tooltip contentStyle={{ background: "#09090b", border: "1px solid #3f3f46", borderRadius: 8, fontSize: 12 }} />
               <Bar dataKey="clientes" radius={[4, 4, 0, 0]} name="Clientes">
                 {barData.map((e, i) => <Cell key={i} fill={getColor(e.clientes)} />)}
+                <LabelList dataKey="clientes" position="top" style={{ fill: "#a1a1aa", fontSize: 12, fontWeight: 700 }} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -76,25 +77,25 @@ export default function Modulo4Carga({ data }) {
           <table style={{ fontSize: 12, borderCollapse: "collapse", width: "100%" }}>
             <thead>
               <tr>
-                <th style={{ padding: "6px 8px", background: "#f9fafb", border: "1px solid #e5e7eb", textAlign: "left", color: "#6b7280", fontWeight: 600 }}>GP \ GT</th>
+                <th style={{ padding: "6px 8px", background: "#09090b", border: "1px solid #27272a", textAlign: "left", color: "#71717a", fontWeight: 600 }}>GP \ GT</th>
                 {gtSet.map((gt) => (
-                  <th key={gt} style={{ padding: "6px 8px", background: "#f9fafb", border: "1px solid #e5e7eb", textAlign: "center", color: "#6b7280", fontWeight: 600, whiteSpace: "nowrap" }}>{gt}</th>
+                  <th key={gt} style={{ padding: "6px 8px", background: "#09090b", border: "1px solid #27272a", textAlign: "center", color: "#71717a", fontWeight: 600, whiteSpace: "nowrap" }}>{gt}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {gpSet.map((gp) => (
                 <tr key={gp}>
-                  <td style={{ padding: "6px 8px", border: "1px solid #f3f4f6", fontWeight: 600, color: "#374151", background: "#f9fafb", whiteSpace: "nowrap" }}>{gp}</td>
+                  <td style={{ padding: "6px 8px", border: "1px solid #27272a", fontWeight: 600, color: "#e4e4e7", background: "#09090b", whiteSpace: "nowrap" }}>{gp}</td>
                   {gtSet.map((gt) => {
                     const val = matriz[`${gp}|${gt}`] || 0;
                     return (
-                      <td key={gt} style={{ padding: "6px 8px", border: "1px solid #f3f4f6", textAlign: "center" }}>
+                      <td key={gt} style={{ padding: "6px 8px", border: "1px solid #27272a", textAlign: "center" }}>
                         {val > 0 ? (
-                          <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 26, height: 26, borderRadius: "50%", background: val > 5 ? "#fee2e2" : "#f3f4f6", color: val > 5 ? "#e11d48" : "#374151", fontSize: 11, fontWeight: 700 }}>
+                          <span style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", width: 26, height: 26, borderRadius: "50%", background: val > 5 ? "#3f0f1a" : "#27272a", color: val > 5 ? "#e11d48" : "#a1a1aa", fontSize: 11, fontWeight: 700 }}>
                             {val}
                           </span>
-                        ) : <span style={{ color: "#e5e7eb" }}>—</span>}
+                        ) : <span style={{ color: "#3f3f46" }}>—</span>}
                       </td>
                     );
                   })}

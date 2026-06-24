@@ -53,13 +53,13 @@ export default function Modulo5Tabela({ data }) {
     <section>
       <h2 className="module-title">Tabela Completa da Carteira</h2>
       <div className="module-card" style={{ padding: 0, overflow: "hidden" }}>
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "14px 20px", borderBottom: "1px solid #f3f4f6" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "14px 20px", borderBottom: "1px solid #27272a" }}>
           <input
             type="text"
             placeholder="Buscar por cliente..."
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
-            style={{ padding: "7px 12px", fontSize: 13, border: "1px solid #e5e7eb", borderRadius: 8, width: 240, outline: "none" }}
+            style={{ padding: "7px 12px", fontSize: 13, border: "1px solid #3f3f46", borderRadius: 8, width: 240, outline: "none", background: "#09090b", color: "#e4e4e7" }}
           />
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             <span style={{ fontSize: 12, color: "#9ca3af" }}>{rows.length} registros</span>
@@ -73,10 +73,10 @@ export default function Modulo5Tabela({ data }) {
         <div style={{ overflowX: "auto" }}>
           <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse" }}>
             <thead>
-              <tr style={{ background: "#f9fafb", borderBottom: "1px solid #f3f4f6" }}>
+              <tr style={{ background: "#09090b", borderBottom: "1px solid #27272a" }}>
                 {COLS.map((c) => (
                   <th key={c.key} onClick={() => handleSort(c.key)}
-                    style={{ padding: "10px 12px", textAlign: c.numeric ? "right" : "left", color: "#6b7280", fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap", userSelect: "none" }}>
+                    style={{ padding: "10px 12px", textAlign: c.numeric ? "right" : "left", color: "#71717a", fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap", userSelect: "none" }}>
                     {c.label}{sortKey === c.key ? (sortAsc ? " ↑" : " ↓") : ""}
                   </th>
                 ))}
@@ -87,20 +87,20 @@ export default function Modulo5Tabela({ data }) {
                 const dias = diasParaRenovacao(r.dataRenovacao);
                 const urgente = dias >= 0 && dias <= 30;
                 return (
-                  <tr key={r.cliente + i} style={{ borderBottom: "1px solid #f9fafb", background: urgente ? "#fff5f5" : "transparent" }}>
-                    <td style={{ padding: "8px 12px", fontWeight: 500, color: "#111827" }}>{r.cliente}</td>
+                  <tr key={r.cliente + i} style={{ borderBottom: "1px solid #27272a", background: urgente ? "#1c0a0a" : "transparent" }}>
+                    <td style={{ padding: "8px 12px", fontWeight: 500, color: "#f4f4f5" }}>{r.cliente}</td>
                     <td style={{ padding: "8px 12px" }}>{statusBadge(r.status)}</td>
-                    <td style={{ padding: "8px 12px", color: "#6b7280" }}>{r.tipoContrato}</td>
-                    <td style={{ padding: "8px 12px", color: "#9ca3af", whiteSpace: "nowrap" }}>{r.dataEntrada}</td>
+                    <td style={{ padding: "8px 12px", color: "#a1a1aa" }}>{r.tipoContrato}</td>
+                    <td style={{ padding: "8px 12px", color: "#71717a", whiteSpace: "nowrap" }}>{r.dataEntrada}</td>
                     <td style={{ padding: "8px 12px", whiteSpace: "nowrap", fontWeight: urgente ? 600 : 400, color: urgente ? "#e11d48" : "#6b7280" }}>
                       {r.dataRenovacao}{urgente && ` (${dias}d)`}
                     </td>
-                    <td style={{ padding: "8px 12px", textAlign: "right", fontWeight: 600, color: "#111827" }}>{formatBRL(r.mrrMensalidade)}</td>
-                    <td style={{ padding: "8px 12px", textAlign: "right", color: "#6b7280" }}>{r.nMeses}</td>
-                    <td style={{ padding: "8px 12px", color: "#6b7280" }}>{r.gp}</td>
-                    <td style={{ padding: "8px 12px", color: "#6b7280" }}>{r.gt}</td>
-                    <td style={{ padding: "8px 12px", color: "#6b7280" }}>{r.designer}</td>
-                    <td style={{ padding: "8px 12px", color: "#6b7280" }}>{r.copywriter}</td>
+                    <td style={{ padding: "8px 12px", textAlign: "right", fontWeight: 600, color: "#f4f4f5" }}>{formatBRL(r.mrrMensalidade)}</td>
+                    <td style={{ padding: "8px 12px", textAlign: "right", color: "#a1a1aa" }}>{r.nMeses}</td>
+                    <td style={{ padding: "8px 12px", color: "#a1a1aa" }}>{r.gp}</td>
+                    <td style={{ padding: "8px 12px", color: "#a1a1aa" }}>{r.gt}</td>
+                    <td style={{ padding: "8px 12px", color: "#a1a1aa" }}>{r.designer}</td>
+                    <td style={{ padding: "8px 12px", color: "#a1a1aa" }}>{r.copywriter}</td>
                   </tr>
                 );
               })}

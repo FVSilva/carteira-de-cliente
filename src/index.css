@@ -118,24 +118,24 @@ body {
 .kpi-card.accent { border-left: 4px solid var(--color-brand); }
 
 .module-card {
-  background: #fff;
+  background: #18181b;
   border-radius: 16px;
   padding: 20px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  border: 1px solid #27272a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
 }
 
 .module-title {
   font-size: 18px;
   font-weight: 700;
-  color: #111827;
+  color: #f4f4f5;
   margin-bottom: 16px;
 }
 
 .section-title {
   font-size: 13px;
   font-weight: 600;
-  color: #6b7280;
+  color: #71717a;
   margin-bottom: 16px;
 }
 

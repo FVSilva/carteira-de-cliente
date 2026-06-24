@@ -1,4 +1,4 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LabelList } from "recharts";
 import { longevidade, faixaLongevidade, diasParaRenovacao, corRenovacao, formatBRL } from "../utils/filters";
 
 const FAIXAS = ["0–6 meses", "7–12 meses", "13–24 meses", "24+ meses"];
@@ -31,11 +31,13 @@ export default function Modulo3Churn({ data }) {
         <div className="module-card">
           <p className="section-title">Tempo de Casa</p>
           <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={histData} margin={{ left: -10 }}>
-              <XAxis dataKey="faixa" tick={{ fontSize: 10, fill: "#6b7280" }} />
-              <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: "#6b7280" }} />
-              <Tooltip />
-              <Bar dataKey="qtd" fill="#e11d48" radius={[4, 4, 0, 0]} name="Clientes" />
+            <BarChart data={histData} margin={{ left: -10, top: 20 }}>
+              <XAxis dataKey="faixa" tick={{ fontSize: 10, fill: "#71717a" }} axisLine={false} tickLine={false} />
+              <YAxis allowDecimals={false} tick={{ fontSize: 11, fill: "#52525b" }} axisLine={false} tickLine={false} />
+              <Tooltip contentStyle={{ background: "#09090b", border: "1px solid #3f3f46", borderRadius: 8, fontSize: 12 }} />
+              <Bar dataKey="qtd" fill="#e11d48" radius={[4, 4, 0, 0]} name="Clientes">
+                <LabelList dataKey="qtd" position="top" style={{ fill: "#e11d48", fontSize: 12, fontWeight: 700 }} />
+              </Bar>
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -71,7 +73,7 @@ export default function Modulo3Churn({ data }) {
           ) : (
             <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse" }}>
               <thead>
-                <tr style={{ color: "#9ca3af", borderBottom: "1px solid #f3f4f6" }}>
+                <tr style={{ color: "#71717a", borderBottom: "1px solid #27272a" }}>
                   <th style={{ textAlign: "left", padding: "4px 0" }}>Cliente</th>
                   <th style={{ textAlign: "left", padding: "4px 0" }}>GP</th>
                   <th style={{ textAlign: "right", padding: "4px 0" }}>MRR</th>
@@ -79,9 +81,9 @@ export default function Modulo3Churn({ data }) {
               </thead>
               <tbody>
                 {emTer.map((r) => (
-                  <tr key={r.cliente} style={{ borderBottom: "1px solid #f9fafb" }}>
-                    <td style={{ padding: "6px 0", color: "#374151" }}>{r.cliente}</td>
-                    <td style={{ padding: "6px 0", color: "#6b7280" }}>{r.gp}</td>
+                  <tr key={r.cliente} style={{ borderBottom: "1px solid #27272a" }}>
+                    <td style={{ padding: "6px 0", color: "#e4e4e7" }}>{r.cliente}</td>
+                    <td style={{ padding: "6px 0", color: "#71717a" }}>{r.gp}</td>
                     <td style={{ padding: "6px 0", textAlign: "right", fontWeight: 600, color: "#e11d48" }}>{formatBRL(r.mrrMensalidade)}</td>
                   </tr>
                 ))}

@@ -29,7 +29,7 @@ export default function App() {
   const filtered = useMemo(() => applyFilters(data, filters), [data, filters]);
 
   return (
-    <div style={{ minHeight: "100vh", background: "#f3f4f6" }}>
+    <div style={{ minHeight: "100vh", background: "#09090b" }}>
       {/* Header */}
       <header className="dash-header">
         <div style={{ maxWidth: 1536, margin: "0 auto", padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
@@ -70,9 +70,9 @@ export default function App() {
 
       {/* Contador */}
       <div style={{ maxWidth: 1536, margin: "0 auto", padding: "10px 24px 0" }}>
-        <p style={{ margin: 0, fontSize: 12, color: "#9ca3af" }}>
-          Exibindo <strong style={{ color: "#374151" }}>{filtered.length}</strong> de{" "}
-          <strong style={{ color: "#374151" }}>{data.length}</strong> clientes
+        <p style={{ margin: 0, fontSize: 12, color: "#71717a" }}>
+          Exibindo <strong style={{ color: "#a1a1aa" }}>{filtered.length}</strong> de{" "}
+          <strong style={{ color: "#a1a1aa" }}>{data.length}</strong> clientes
         </p>
       </div>
 
