@@ -17,19 +17,17 @@ const COLS = [
 
 function exportCSV(rows) {
   const header = COLS.map((c) => c.label).join(",");
-  const body = rows.map((r) =>
-    COLS.map((c) => {
-      const v = r[c.key] ?? "";
-      return `"${String(v).replace(/"/g, '""')}"`;
-    }).join(",")
-  ).join("\n");
+  const body = rows.map((r) => COLS.map((c) => `"${String(r[c.key] ?? "").replace(/"/g, '""')}"`).join(",")).join("\n");
   const blob = new Blob([`${header}\n${body}`], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "carteira_midas.csv";
-  a.click();
+  const a = document.createElement("a"); a.href = url; a.download = "carteira_midas.csv"; a.click();
   URL.revokeObjectURL(url);
+}
+
+function statusBadge(s) {
+  if (s === "Ativo") return <span className="badge-ativo">{s}</span>;
+  if (s === "Ter") return <span className="badge-ter">{s}</span>;
+  return <span className="badge-default">{s}</span>;
 }
 
 export default function Modulo5Tabela({ data }) {
@@ -38,16 +36,12 @@ export default function Modulo5Tabela({ data }) {
   const [sortAsc, setSortAsc] = useState(true);
 
   const rows = useMemo(() => {
-    let filtered = busca
-      ? data.filter((r) => r.cliente.toLowerCase().includes(busca.toLowerCase()))
-      : data;
-    filtered = [...filtered].sort((a, b) => {
-      const va = a[sortKey] ?? "";
-      const vb = b[sortKey] ?? "";
-      const result = typeof va === "number" ? va - vb : String(va).localeCompare(String(vb));
-      return sortAsc ? result : -result;
+    let f = busca ? data.filter((r) => r.cliente.toLowerCase().includes(busca.toLowerCase())) : data;
+    return [...f].sort((a, b) => {
+      const va = a[sortKey] ?? "", vb = b[sortKey] ?? "";
+      const res = typeof va === "number" ? va - vb : String(va).localeCompare(String(vb));
+      return sortAsc ? res : -res;
     });
-    return filtered;
   }, [data, busca, sortKey, sortAsc]);
 
   function handleSort(key) {
@@ -55,50 +49,35 @@ export default function Modulo5Tabela({ data }) {
     else { setSortKey(key); setSortAsc(true); }
   }
 
-  const statusBadge = (s) => {
-    if (s === "Ativo") return "bg-emerald-100 text-emerald-700";
-    if (s === "Ter") return "bg-rose-100 text-rose-700";
-    return "bg-gray-100 text-gray-600";
-  };
-
   return (
     <section>
-      <h2 className="text-lg font-bold text-gray-800 mb-4">Tabela Completa da Carteira</h2>
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="flex items-center justify-between gap-3 p-4 border-b border-gray-100">
+      <h2 className="module-title">Tabela Completa da Carteira</h2>
+      <div className="module-card" style={{ padding: 0, overflow: "hidden" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "14px 20px", borderBottom: "1px solid #f3f4f6" }}>
           <input
             type="text"
             placeholder="Buscar por cliente..."
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
-            className="px-3 py-2 text-sm border border-gray-300 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-red-500"
+            style={{ padding: "7px 12px", fontSize: 13, border: "1px solid #e5e7eb", borderRadius: 8, width: 240, outline: "none" }}
           />
-          <div className="flex items-center gap-3">
-            <span className="text-xs text-gray-400">{rows.length} registros</span>
-            <button
-              onClick={() => exportCSV(rows)}
-              className="px-4 py-2 text-xs font-semibold bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
-            >
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <span style={{ fontSize: 12, color: "#9ca3af" }}>{rows.length} registros</span>
+            <button onClick={() => exportCSV(rows)}
+              style={{ padding: "7px 16px", fontSize: 12, fontWeight: 600, background: "#e11d48", color: "#fff", border: "none", borderRadius: 8, cursor: "pointer" }}>
               Exportar CSV
             </button>
           </div>
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-xs">
+
+        <div style={{ overflowX: "auto" }}>
+          <table style={{ width: "100%", fontSize: 12, borderCollapse: "collapse" }}>
             <thead>
-              <tr className="bg-gray-50 border-b border-gray-100">
+              <tr style={{ background: "#f9fafb", borderBottom: "1px solid #f3f4f6" }}>
                 {COLS.map((c) => (
-                  <th
-                    key={c.key}
-                    onClick={() => handleSort(c.key)}
-                    className={`px-3 py-2.5 text-left text-gray-500 font-semibold cursor-pointer select-none whitespace-nowrap hover:text-red-600 ${
-                      c.numeric ? "text-right" : ""
-                    }`}
-                  >
-                    {c.label}
-                    {sortKey === c.key && (
-                      <span className="ml-1">{sortAsc ? "↑" : "↓"}</span>
-                    )}
+                  <th key={c.key} onClick={() => handleSort(c.key)}
+                    style={{ padding: "10px 12px", textAlign: c.numeric ? "right" : "left", color: "#6b7280", fontWeight: 600, cursor: "pointer", whiteSpace: "nowrap", userSelect: "none" }}>
+                    {c.label}{sortKey === c.key ? (sortAsc ? " ↑" : " ↓") : ""}
                   </th>
                 ))}
               </tr>
@@ -108,28 +87,20 @@ export default function Modulo5Tabela({ data }) {
                 const dias = diasParaRenovacao(r.dataRenovacao);
                 const urgente = dias >= 0 && dias <= 30;
                 return (
-                  <tr
-                    key={r.cliente + i}
-                    className={`border-b border-gray-50 hover:bg-gray-50 transition-colors ${urgente ? "bg-red-50/40" : ""}`}
-                  >
-                    <td className="px-3 py-2 font-medium text-gray-800">{r.cliente}</td>
-                    <td className="px-3 py-2">
-                      <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${statusBadge(r.status)}`}>
-                        {r.status}
-                      </span>
+                  <tr key={r.cliente + i} style={{ borderBottom: "1px solid #f9fafb", background: urgente ? "#fff5f5" : "transparent" }}>
+                    <td style={{ padding: "8px 12px", fontWeight: 500, color: "#111827" }}>{r.cliente}</td>
+                    <td style={{ padding: "8px 12px" }}>{statusBadge(r.status)}</td>
+                    <td style={{ padding: "8px 12px", color: "#6b7280" }}>{r.tipoContrato}</td>
+                    <td style={{ padding: "8px 12px", color: "#9ca3af", whiteSpace: "nowrap" }}>{r.dataEntrada}</td>
+                    <td style={{ padding: "8px 12px", whiteSpace: "nowrap", fontWeight: urgente ? 600 : 400, color: urgente ? "#e11d48" : "#6b7280" }}>
+                      {r.dataRenovacao}{urgente && ` (${dias}d)`}
                     </td>
-                    <td className="px-3 py-2 text-gray-600">{r.tipoContrato}</td>
-                    <td className="px-3 py-2 text-gray-500 whitespace-nowrap">{r.dataEntrada}</td>
-                    <td className={`px-3 py-2 whitespace-nowrap font-medium ${urgente ? "text-red-600" : "text-gray-600"}`}>
-                      {r.dataRenovacao}
-                      {urgente && <span className="ml-1 text-red-400">({dias}d)</span>}
-                    </td>
-                    <td className="px-3 py-2 text-right font-semibold text-gray-800">{formatBRL(r.mrrMensalidade)}</td>
-                    <td className="px-3 py-2 text-right text-gray-600">{r.nMeses}</td>
-                    <td className="px-3 py-2 text-gray-600">{r.gp}</td>
-                    <td className="px-3 py-2 text-gray-600">{r.gt}</td>
-                    <td className="px-3 py-2 text-gray-600">{r.designer}</td>
-                    <td className="px-3 py-2 text-gray-600">{r.copywriter}</td>
+                    <td style={{ padding: "8px 12px", textAlign: "right", fontWeight: 600, color: "#111827" }}>{formatBRL(r.mrrMensalidade)}</td>
+                    <td style={{ padding: "8px 12px", textAlign: "right", color: "#6b7280" }}>{r.nMeses}</td>
+                    <td style={{ padding: "8px 12px", color: "#6b7280" }}>{r.gp}</td>
+                    <td style={{ padding: "8px 12px", color: "#6b7280" }}>{r.gt}</td>
+                    <td style={{ padding: "8px 12px", color: "#6b7280" }}>{r.designer}</td>
+                    <td style={{ padding: "8px 12px", color: "#6b7280" }}>{r.copywriter}</td>
                   </tr>
                 );
               })}

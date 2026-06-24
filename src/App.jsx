@@ -29,28 +29,26 @@ export default function App() {
   const filtered = useMemo(() => applyFilters(data, filters), [data, filters]);
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div style={{ minHeight: "100vh", background: "#f3f4f6" }}>
       {/* Header */}
-      <header className="bg-gray-950 border-b border-gray-800 shadow-sm">
-        <div className="max-w-screen-2xl mx-auto px-4 py-4 flex items-center justify-between gap-4 flex-wrap">
+      <header className="dash-header">
+        <div style={{ maxWidth: 1536, margin: "0 auto", padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
           <div>
-            <h1 className="text-xl font-bold text-white m-0">
+            <h1 style={{ margin: 0, fontSize: 20, fontWeight: 700, color: "#fff" }}>
               Carteira de Clientes —{" "}
-              <span className="text-red-400">Squad Midas</span>
+              <span style={{ color: "#e11d48" }}>Squad Midas</span>
             </h1>
-            <p className="text-xs text-gray-400 mt-0.5">Muniz &amp; Co. · Instrumento de gestão</p>
+            <p style={{ margin: 0, fontSize: 11, color: "#71717a", marginTop: 2 }}>
+              Muniz &amp; Co. · Instrumento de gestão
+            </p>
           </div>
-          <div className="flex items-center gap-3">
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
             {lastFetch && (
-              <span className="text-xs text-gray-400">
+              <span style={{ fontSize: 11, color: "#71717a" }}>
                 Dados de {lastFetch.toLocaleTimeString("pt-BR")}
               </span>
             )}
-            <button
-              onClick={fetchData}
-              disabled={loading}
-              className="px-4 py-2 text-sm font-semibold bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors"
-            >
+            <button className="btn-brand" onClick={fetchData} disabled={loading}>
               {loading ? "Carregando..." : "Atualizar dados"}
             </button>
           </div>
@@ -59,9 +57,9 @@ export default function App() {
 
       {/* Error banner */}
       {error && (
-        <div className="bg-amber-50 border-b border-amber-200 px-4 py-2 text-sm text-amber-800 flex items-center justify-between">
+        <div style={{ background: "#fef3c7", borderBottom: "1px solid #fcd34d", padding: "8px 24px", fontSize: 13, color: "#92400e", display: "flex", justifyContent: "space-between" }}>
           <span>⚠️ {error} — exibindo dados locais.</span>
-          <button onClick={fetchData} className="underline text-amber-700 text-xs">
+          <button onClick={fetchData} style={{ background: "none", border: "none", textDecoration: "underline", color: "#b45309", cursor: "pointer", fontSize: 12 }}>
             Tentar novamente
           </button>
         </div>
@@ -71,25 +69,24 @@ export default function App() {
       <GlobalFilters data={data} filters={filters} setFilters={setFilters} />
 
       {/* Contador */}
-      <div className="max-w-screen-2xl mx-auto px-4 pt-3">
-        <p className="text-xs text-gray-400">
-          Exibindo{" "}
-          <strong className="text-gray-700">{filtered.length}</strong> de{" "}
-          <strong className="text-gray-700">{data.length}</strong> clientes
+      <div style={{ maxWidth: 1536, margin: "0 auto", padding: "10px 24px 0" }}>
+        <p style={{ margin: 0, fontSize: 12, color: "#9ca3af" }}>
+          Exibindo <strong style={{ color: "#374151" }}>{filtered.length}</strong> de{" "}
+          <strong style={{ color: "#374151" }}>{data.length}</strong> clientes
         </p>
       </div>
 
       {/* Loading */}
       {loading && (
-        <div className="max-w-screen-2xl mx-auto px-4 py-2">
-          <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700 animate-pulse">
+        <div style={{ maxWidth: 1536, margin: "0 auto", padding: "8px 24px" }}>
+          <div style={{ background: "#fff1f2", border: "1px solid #fecdd3", borderRadius: 8, padding: "10px 14px", fontSize: 13, color: "#be123c" }}>
             Buscando dados da planilha...
           </div>
         </div>
       )}
 
       {/* Módulos */}
-      <main className="max-w-screen-2xl mx-auto px-4 py-6 space-y-8">
+      <main style={{ maxWidth: 1536, margin: "0 auto", padding: "24px", display: "flex", flexDirection: "column", gap: 32 }}>
         <Modulo1KPI data={filtered} />
         <Modulo2Financeiro data={filtered} />
         <Modulo3Churn data={filtered} />
@@ -97,7 +94,7 @@ export default function App() {
         <Modulo5Tabela data={filtered} />
       </main>
 
-      <footer className="max-w-screen-2xl mx-auto px-4 py-6 text-center text-xs text-gray-300">
+      <footer style={{ maxWidth: 1536, margin: "0 auto", padding: "24px", textAlign: "center", fontSize: 11, color: "#d1d5db" }}>
         Squad Midas · Muniz &amp; Co. · Dashboard v1.0
       </footer>
     </div>

@@ -19,37 +19,21 @@ export default function GlobalFilters({ data, filters, setFilters }) {
   }
 
   function resetFilters() {
-    setFilters({
-      tipoContrato: [],
-      gp: "",
-      gt: "",
-      mrrMin: globalMin,
-      mrrMax: globalMax,
-      status: [],
-      dataInicio: "",
-      dataFim: "",
-    });
+    setFilters({ tipoContrato: [], gp: "", gt: "", mrrMin: globalMin, mrrMax: globalMax, status: [], dataInicio: "", dataFim: "" });
   }
 
   return (
-    <div className="bg-gray-950 border-b border-gray-800 sticky top-0 z-50 shadow-sm">
-      <div className="max-w-screen-2xl mx-auto px-4 py-3">
-        <div className="flex flex-wrap gap-4 items-end">
+    <div className="dash-filters">
+      <div style={{ maxWidth: 1536, margin: "0 auto", padding: "12px 24px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 20, alignItems: "flex-end" }}>
 
           {/* Tipo de Contrato */}
           <div>
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Tipo de Contrato</label>
-            <div className="flex gap-1">
+            <label className="filter-label">Tipo de Contrato</label>
+            <div style={{ display: "flex", gap: 4 }}>
               {tipos.map((t) => (
-                <button
-                  key={t}
-                  onClick={() => toggleList("tipoContrato", t)}
-                  className={`px-3 py-1.5 text-xs rounded-full border font-medium transition-colors ${
-                    filters.tipoContrato.includes(t)
-                      ? "bg-red-600 text-white border-red-600"
-                      : "bg-gray-800 text-gray-300 border-gray-700 hover:border-red-500"
-                  }`}
-                >
+                <button key={t} onClick={() => toggleList("tipoContrato", t)}
+                  className={`filter-chip ${filters.tipoContrato.includes(t) ? "active" : ""}`}>
                   {t}
                 </button>
               ))}
@@ -58,12 +42,9 @@ export default function GlobalFilters({ data, filters, setFilters }) {
 
           {/* GP */}
           <div>
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">GP</label>
-            <select
-              value={filters.gp}
-              onChange={(e) => setFilters((f) => ({ ...f, gp: e.target.value }))}
-              className="px-3 py-1.5 text-sm border border-gray-700 rounded-lg bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500"
-            >
+            <label className="filter-label">GP</label>
+            <select className="filter-select" value={filters.gp}
+              onChange={(e) => setFilters((f) => ({ ...f, gp: e.target.value }))}>
               <option value="">Todos</option>
               {gps.map((g) => <option key={g} value={g}>{g}</option>)}
             </select>
@@ -71,12 +52,9 @@ export default function GlobalFilters({ data, filters, setFilters }) {
 
           {/* GT */}
           <div>
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">GT</label>
-            <select
-              value={filters.gt}
-              onChange={(e) => setFilters((f) => ({ ...f, gt: e.target.value }))}
-              className="px-3 py-1.5 text-sm border border-gray-700 rounded-lg bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500"
-            >
+            <label className="filter-label">GT</label>
+            <select className="filter-select" value={filters.gt}
+              onChange={(e) => setFilters((f) => ({ ...f, gt: e.target.value }))}>
               <option value="">Todos</option>
               {gts.map((g) => <option key={g} value={g}>{g}</option>)}
             </select>
@@ -84,77 +62,49 @@ export default function GlobalFilters({ data, filters, setFilters }) {
 
           {/* Faixa de MRR */}
           <div>
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">
-              MRR Mensalidade: R${filters.mrrMin.toLocaleString("pt-BR")} – R${filters.mrrMax.toLocaleString("pt-BR")}
+            <label className="filter-label">
+              MRR: R${filters.mrrMin.toLocaleString("pt-BR")} – R${filters.mrrMax.toLocaleString("pt-BR")}
             </label>
-            <div className="flex gap-2 items-center">
-              <input
-                type="range"
-                min={globalMin}
-                max={globalMax}
-                step={100}
+            <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+              <input type="range" min={globalMin} max={globalMax} step={100}
                 value={filters.mrrMin}
                 onChange={(e) => setFilters((f) => ({ ...f, mrrMin: Math.min(Number(e.target.value), f.mrrMax - 100) }))}
-                className="w-24 accent-red-600"
-              />
-              <input
-                type="range"
-                min={globalMin}
-                max={globalMax}
-                step={100}
+                style={{ width: 90, accentColor: "#e11d48" }} />
+              <input type="range" min={globalMin} max={globalMax} step={100}
                 value={filters.mrrMax}
                 onChange={(e) => setFilters((f) => ({ ...f, mrrMax: Math.max(Number(e.target.value), f.mrrMin + 100) }))}
-                className="w-24 accent-red-600"
-              />
+                style={{ width: 90, accentColor: "#e11d48" }} />
             </div>
           </div>
 
           {/* Status */}
           <div>
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Status</label>
-            <div className="flex gap-1">
+            <label className="filter-label">Status</label>
+            <div style={{ display: "flex", gap: 4 }}>
               {allStatus.map((s) => (
-                <button
-                  key={s}
-                  onClick={() => toggleList("status", s)}
-                  className={`px-3 py-1.5 text-xs rounded-full border font-medium transition-colors ${
-                    filters.status.includes(s)
-                      ? "bg-red-700 text-white border-red-700"
-                      : "bg-gray-800 text-gray-300 border-gray-700 hover:border-red-500"
-                  }`}
-                >
+                <button key={s} onClick={() => toggleList("status", s)}
+                  className={`filter-chip ${filters.status.includes(s) ? "active" : ""}`}>
                   {s}
                 </button>
               ))}
             </div>
           </div>
 
-          {/* Período de Entrada */}
+          {/* Período */}
           <div>
-            <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-1">Entrada de</label>
-            <div className="flex gap-1 items-center">
-              <input
-                type="date"
-                value={filters.dataInicio}
-                onChange={(e) => setFilters((f) => ({ ...f, dataInicio: e.target.value }))}
-                className="px-2 py-1.5 text-xs border border-gray-700 rounded-lg bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
-              <span className="text-gray-400 text-xs">até</span>
-              <input
-                type="date"
-                value={filters.dataFim}
-                onChange={(e) => setFilters((f) => ({ ...f, dataFim: e.target.value }))}
-                className="px-2 py-1.5 text-xs border border-gray-700 rounded-lg bg-gray-800 text-gray-200 focus:outline-none focus:ring-2 focus:ring-red-500"
-              />
+            <label className="filter-label">Entrada de</label>
+            <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+              <input type="date" className="filter-date" value={filters.dataInicio}
+                onChange={(e) => setFilters((f) => ({ ...f, dataInicio: e.target.value }))} />
+              <span style={{ color: "#52525b", fontSize: 11 }}>até</span>
+              <input type="date" className="filter-date" value={filters.dataFim}
+                onChange={(e) => setFilters((f) => ({ ...f, dataFim: e.target.value }))} />
             </div>
           </div>
 
-          {/* Reset */}
-          <button
-            onClick={resetFilters}
-            className="px-4 py-1.5 text-xs font-semibold text-gray-400 border border-gray-700 rounded-lg hover:bg-gray-800 transition-colors"
-          >
-            Limpar filtros
+          <button onClick={resetFilters}
+            style={{ padding: "6px 14px", fontSize: 12, fontWeight: 600, color: "#a1a1aa", background: "transparent", border: "1px solid #3f3f46", borderRadius: 8, cursor: "pointer" }}>
+            Limpar
           </button>
         </div>
       </div>
