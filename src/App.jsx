@@ -35,7 +35,7 @@ export default function App() {
         <div style={{ maxWidth: 1536, margin: "0 auto", padding: "12px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
           <div>
             <h1 style={{ margin: 0, fontSize: 20, fontWeight: 700, color: "#fff" }}>
-              Carteira de Clientes —{" "}
+              Carteira de Cliente —{" "}
               <span style={{ color: "#e11d48" }}>Squad Midas</span>
             </h1>
             <p style={{ margin: 0, fontSize: 11, color: "#71717a", marginTop: 2 }}>
