@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://felup.github.io/dashnovo",
+  "homepage": "https://FVSilva.github.io/dashnovo",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

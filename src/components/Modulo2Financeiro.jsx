@@ -4,7 +4,7 @@ import {
 } from "recharts";
 import { formatBRL, formatBRLShort, uniqueValues } from "../utils/filters";
 
-const COLORS = ["#6366f1", "#10b981", "#f59e0b", "#ef4444", "#8b5cf6", "#06b6d4"];
+const COLORS = ["#ef4444", "#b91c1c", "#7f1d1d", "#dc2626", "#991b1b", "#450a0a"];
 
 function CustomTooltipBRL({ active, payload, label }) {
   if (!active || !payload?.length) return null;
@@ -59,7 +59,7 @@ export default function Modulo2Financeiro({ data }) {
               <XAxis type="number" tickFormatter={formatBRLShort} tick={{ fontSize: 11 }} />
               <YAxis type="category" dataKey="name" tick={{ fontSize: 11 }} width={100} />
               <Tooltip content={<CustomTooltipBRL />} />
-              <Bar dataKey="mrr" fill="#6366f1" radius={[0, 4, 4, 0]} />
+              <Bar dataKey="mrr" fill="#ef4444" radius={[0, 4, 4, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -86,7 +86,7 @@ export default function Modulo2Financeiro({ data }) {
               <XAxis dataKey="name" tick={{ fontSize: 12 }} />
               <YAxis tickFormatter={formatBRLShort} tick={{ fontSize: 11 }} />
               <Tooltip content={<CustomTooltipBRL />} />
-              <Bar dataKey="mrrMedio" fill="#10b981" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="mrrMedio" fill="#dc2626" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>

@@ -42,7 +42,7 @@ export default function Modulo3Churn({ data }) {
               <XAxis dataKey="faixa" tick={{ fontSize: 10 }} />
               <YAxis allowDecimals={false} tick={{ fontSize: 11 }} />
               <Tooltip />
-              <Bar dataKey="qtd" fill="#8b5cf6" radius={[4, 4, 0, 0]} name="Clientes" />
+              <Bar dataKey="qtd" fill="#ef4444" radius={[4, 4, 0, 0]} name="Clientes" />
             </BarChart>
           </ResponsiveContainer>
         </div>

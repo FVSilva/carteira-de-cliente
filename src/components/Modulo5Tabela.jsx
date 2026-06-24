@@ -71,13 +71,13 @@ export default function Modulo5Tabela({ data }) {
             placeholder="Buscar por cliente..."
             value={busca}
             onChange={(e) => setBusca(e.target.value)}
-            className="px-3 py-2 text-sm border border-gray-300 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="px-3 py-2 text-sm border border-gray-300 rounded-lg w-64 focus:outline-none focus:ring-2 focus:ring-red-500"
           />
           <div className="flex items-center gap-3">
             <span className="text-xs text-gray-400">{rows.length} registros</span>
             <button
               onClick={() => exportCSV(rows)}
-              className="px-4 py-2 text-xs font-semibold bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors"
+              className="px-4 py-2 text-xs font-semibold bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
             >
               Exportar CSV
             </button>
@@ -91,7 +91,7 @@ export default function Modulo5Tabela({ data }) {
                   <th
                     key={c.key}
                     onClick={() => handleSort(c.key)}
-                    className={`px-3 py-2.5 text-left text-gray-500 font-semibold cursor-pointer select-none whitespace-nowrap hover:text-indigo-600 ${
+                    className={`px-3 py-2.5 text-left text-gray-500 font-semibold cursor-pointer select-none whitespace-nowrap hover:text-red-600 ${
                       c.numeric ? "text-right" : ""
                     }`}
                   >

@@ -29,14 +29,14 @@ export default function App() {
   const filtered = useMemo(() => applyFilters(data, filters), [data, filters]);
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-100">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 shadow-sm">
+      <header className="bg-gray-950 border-b border-gray-800 shadow-sm">
         <div className="max-w-screen-2xl mx-auto px-4 py-4 flex items-center justify-between gap-4 flex-wrap">
           <div>
-            <h1 className="text-xl font-bold text-gray-900 m-0">
-              Dashboard de Carteira —{" "}
-              <span className="text-indigo-600">Squad Midas</span>
+            <h1 className="text-xl font-bold text-white m-0">
+              Carteira de Clientes —{" "}
+              <span className="text-red-400">Squad Midas</span>
             </h1>
             <p className="text-xs text-gray-400 mt-0.5">Muniz &amp; Co. · Instrumento de gestão</p>
           </div>
@@ -49,7 +49,7 @@ export default function App() {
             <button
               onClick={fetchData}
               disabled={loading}
-              className="px-4 py-2 text-sm font-semibold bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 disabled:opacity-50 transition-colors"
+              className="px-4 py-2 text-sm font-semibold bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 transition-colors"
             >
               {loading ? "Carregando..." : "Atualizar dados"}
             </button>
@@ -82,7 +82,7 @@ export default function App() {
       {/* Loading */}
       {loading && (
         <div className="max-w-screen-2xl mx-auto px-4 py-2">
-          <div className="bg-indigo-50 border border-indigo-200 rounded-lg p-3 text-sm text-indigo-700 animate-pulse">
+          <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700 animate-pulse">
             Buscando dados da planilha...
           </div>
         </div>

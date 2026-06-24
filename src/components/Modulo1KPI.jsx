@@ -2,11 +2,11 @@ import { formatBRL, diasParaRenovacao } from "../utils/filters";
 
 function KPICard({ label, value, sub, color = "indigo" }) {
   const colors = {
-    indigo: "from-indigo-500 to-indigo-700",
-    emerald: "from-emerald-500 to-emerald-700",
-    amber: "from-amber-400 to-amber-600",
-    rose: "from-rose-500 to-rose-700",
-    violet: "from-violet-500 to-violet-700",
+    indigo: "from-gray-800 to-gray-950",
+    emerald: "from-red-700 to-red-900",
+    amber: "from-gray-700 to-gray-900",
+    rose: "from-red-800 to-red-950",
+    violet: "from-gray-900 to-black border border-red-800",
   };
   return (
     <div className={`bg-gradient-to-br ${colors[color]} rounded-2xl p-5 text-white shadow-lg`}>
@@ -30,7 +30,7 @@ export default function Modulo1KPI({ data }) {
 
   return (
     <section>
-      <h2 className="text-lg font-bold text-gray-800 mb-4">Visão Geral da Carteira</h2>
+      <h2 className="text-lg font-bold text-gray-900 mb-4">Visão Geral da Carteira</h2>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <KPICard label="Clientes ativos" value={ativos.length} color="indigo" />
         <KPICard label="MRR Total" value={formatBRL(mrrTotal)} sub="somente Executar" color="emerald" />
