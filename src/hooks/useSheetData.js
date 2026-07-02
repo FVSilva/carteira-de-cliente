@@ -38,12 +38,21 @@ function parseMoney(v) {
   return parseFloat(String(v).replace(/[R$\s]/g, "").replace(/\./g, "").replace(",", ".")) || 0;
 }
 
+const PT_MONTHS = { jan:1,fev:2,mar:3,abr:4,mai:5,jun:6,jul:7,ago:8,set:9,out:10,nov:11,dez:12 };
+
 function parseDate(v) {
   if (!v) return "";
-  // Handles DD/MM/YYYY or YYYY-MM-DD
-  const parts = v.trim().split("/");
-  if (parts.length === 3) return `${parts[2]}-${parts[1].padStart(2,"0")}-${parts[0].padStart(2,"0")}`;
-  return v.trim();
+  const s = v.trim();
+  // DD/MM/YYYY
+  const slash = s.split("/");
+  if (slash.length === 3) return `${slash[2]}-${slash[1].padStart(2,"0")}-${slash[0].padStart(2,"0")}`;
+  // D-mmm.-YYYY or D-mmm-YYYY (e.g. "7-jul.-2025")
+  const dash = s.match(/^(\d{1,2})-([a-záéíóúâãêôç.]+)-(\d{4})$/i);
+  if (dash) {
+    const mon = PT_MONTHS[dash[2].toLowerCase().replace(/\./g,"").slice(0,3)];
+    if (mon) return `${dash[3]}-${String(mon).padStart(2,"0")}-${dash[1].padStart(2,"0")}`;
+  }
+  return s;
 }
 
 function rowsToData(lines) {
@@ -51,19 +60,19 @@ function rowsToData(lines) {
   const headers = lines[0].map(h => h.trim());
 
   const iSquad    = findCol(headers, "squad");
-  const iEntrada  = findCol(headers, "entrada");
-  const iCliente  = findCol(headers, "cliente");
+  const iEntrada  = findCol(headers, "data inicio", "data início", "inicio", "entrada");
+  const iCliente  = findCol(headers, "name", "nome", "cliente", "projeto");
   const iStatus   = findCol(headers, "status");
-  const iRenov    = findCol(headers, "renova");
-  const iTipo     = findCol(headers, "tipo");
-  const iMrrTotal = findCol(headers, "mrr total", "mrr_total");
-  const iMeses    = findCol(headers, "meses", "n de meses", "n. de meses");
-  const iMrrMens  = findCol(headers, "mensalidade");
+  const iRenov    = findCol(headers, "churn", "renova");
+  const iTipo     = findCol(headers, "categoria_produto", "categoria produto", "categoria", "tipo");
+  const iMrrTotal = findCol(headers, "valor do contrato", "valor contrato", "mrr total", "mrr_total");
+  const iMeses    = findCol(headers, "compromisso", "meses", "n de meses", "n. de meses");
+  const iMrrMens  = findCol(headers, "mensal", "mensalidade");
   const iCloser   = findCol(headers, "closer");
-  const iGp       = findCol(headers, "gp");
+  const iGp       = findCol(headers, "coordenador", "gp");
   const iGt       = findCol(headers, "gt");
   const iDesigner = findCol(headers, "designer");
-  const iCopy     = findCol(headers, "copywriter", "copy");
+  const iCopy     = findCol(headers, "copy");
 
   const result = lines.slice(1).map(row => ({
     squad:          row[iSquad]    ?? "",
